@@ -1,0 +1,109 @@
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+enum Role {
+  STUDENT
+  FACULTY
+  STAFF
+  SYSADMIN
+}
+
+enum RequestType {
+  ACADEMIC_COMPLAINT
+  FINANCIAL_COMPLAINT
+  SERVICE_COMPLAINT
+  DEVELOPMENT_SUGGESTION
+}
+
+enum Department {
+  ACADEMIC_SECTION
+  FINANCIAL_SECTION
+  REGISTRATION_STUDENT_AFFAIRS
+}
+
+enum Priority {
+  URGENT
+  MID
+  NORMAL
+}
+
+enum Status {
+  RECEIVED
+  UNDER_REVIEW
+  DECISION_MADE
+  CLOSED
+}
+
+model User {
+  id           Int       @id @default(autoincrement())
+  fullName     String
+  email        String    @unique
+  passwordHash String
+  universityId String?   @unique
+  faculty      String?
+  phone        String?
+  role         String    @default("STUDENT")
+  createdAt    DateTime  @default(now())
+  updatedAt    DateTime  @updatedAt
+  
+  requests     Request[]
+  complaints   Complaint[]
+}
+
+model Request {
+  id            Int             @id @default(autoincrement())
+  referenceCode String          @unique
+  userId        Int
+  user          User            @relation(fields: [userId], references: [id])
+  requestType   String
+  department    String
+  details       String
+  status        String          @default("RECEIVED")
+  createdAt     DateTime        @default(now())
+  updatedAt     DateTime        @updatedAt
+  
+  timeline      TimelineStep[]
+  attachments   Attachment[]
+}
+
+model Attachment {
+  id        String   @id @default(uuid())
+  requestId Int      // <-- Fixed from String to Int to match Request.id
+  request   Request  @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  fileUrl   String
+  fileName  String
+}
+
+model TimelineStep {
+  id          String   @id @default(uuid())
+  requestId   Int      // <-- Fixed from String to Int to match Request.id
+  request     Request  @relation(fields: [requestId], references: [id], onDelete: Cascade)
+  stepNumber  Int
+  title       String
+  description String
+  status      String
+  noteAuthor  String?
+  noteBody    String?
+  createdAt   DateTime @default(now())
+}
+
+model Complaint {
+  id          Int      @id @default(autoincrement())
+  refCode     String   @unique
+  type        String
+  department  String
+  description String
+  status      String   @default("PENDING")
+  priority    String   @default("NORMAL")
+  userId      Int?
+  user        User?    @relation(fields: [userId], references: [id])
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}

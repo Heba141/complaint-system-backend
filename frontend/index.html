@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>نظام الشكاوى والمقترحات - جامعة البلقاء التطبيقية</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header class="navbar">
+        <div class="logo-container">
+            <h1>جامعة البلقاء التطبيقية</h1>
+            <span>نظام الشكاوى والمقترحات</span>
+        </div>
+        <nav>
+            <button class="nav-btn active" data-target="home-section">الرئيسية</button>
+            <button class="nav-btn" data-target="login-section">تسجيل الدخول</button>
+            <button class="nav-btn" data-target="signup-section">إنشاء حساب</button>
+            <button class="nav-btn" data-target="submit-section">تقديم طلب</button>
+            <button class="nav-btn" data-target="track-section">تتبع الطلب</button>
+        </nav>
+    </header>
+
+    <main class="container">
+        <!-- Home Section -->
+        <section id="home-section" class="content-section active">
+            <h2>مرحباً بك في بوابة الشكاوى والمقترحات</h2>
+            <p>منصة رقمية متقدمة تمكن الطلبة وأعضاء الهيئتين الأكاديمية والإدارية من تقديم الشكاوى والمقترحات ومتابعة قرارات اللجان بشفافية مطلقة.</p>
+            <div class="features-grid">
+                <div class="card">
+                    <h3>سرعة المعالجة</h3>
+                    <p>متابعة فورية عبر العمادة المعنية.</p>
+                </div>
+                <div class="card">
+                    <h3>تتبع المسار الفوري</h3>
+                    <p>معرفة حالة الطلب خطوة بخطوة عبر رقم المرجع.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Login Section -->
+        <section id="login-section" class="content-section">
+            <h2>تسجيل الدخول إلى النظام</h2>
+            <form id="loginForm">
+                <div class="form-group">
+                    <label for="loginEmail">البريد الإلكتروني</label>
+                    <input type="email5" id="loginEmail" name="email" required placeholder="name@bau.edu.jo">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">كلمة المرور</label>
+                    <input type="password" id="loginPassword" name="password" required placeholder="********">
+                </div>
+                <button type="submit" class="btn-primary">دخول</button>
+            </form>
+            <div id="loginResult" class="result-box"></div>
+        </section>
+
+        <!-- Signup Section -->
+        <section id="signup-section" class="content-section">
+            <h2>إنشاء حساب جديد</h2>
+            <form id="signupForm">
+                <div class="form-group">
+                    <label for="signupName">الاسم الكامل</label>
+                    <input type="text" id="signupName" name="name" required placeholder="أدخل اسمك الكامل">
+                </div>
+                <div class="form-group">
+                    <label for="signupEmail">البريد الإلكتروني</label>
+                    <input type="email" id="signupEmail" name="email" required placeholder="name@bau.edu.jo">
+                </div>
+                <div class="form-group">
+                    <label for="signupPassword">كلمة المرور</label>
+                    <input type="password" id="signupPassword" name="password" required placeholder="********">
+                </div>
+                <button type="submit" class="btn-primary">تسجيل حساب</button>
+            </form>
+            <div id="signupResult" class="result-box"></div>
+        </section>
+
+        <!-- Submit Complaint Section -->
+        <section id="submit-section" class="content-section">
+            <h2>إنشاء طلب جديد</h2>
+            <form id="complaintForm">
+                <div class="form-group">
+                    <label for="type">نوع الطلب</label>
+                    <select id="type" name="type" required>
+                        <option value="ACADEMIC_COMPLAINT">شكوى أكاديمية</option>
+                        <option value="SERVICE_COMPLAINT">شكوى خدمية</option>
+                        <option value="SUGGESTION">مقترح تطويري</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="department">القسم / الكلية</label>
+                    <select id="department" name="department" required>
+                        <option value="ACADEMIC_SECTION">كلية الهندسة التكنولوجية</option>
+                        <option value="BUSINESS_SECTION">كلية الأعمال والتخطيط المالي</option>
+                        <option value="IT_SECTION">كلية الأمير عبد الله بن غازي للاتصالات</option>
+                    </select>
+                </div>
+
+                <div class="form-group">
+                    <label for="description">تفاصيل الطلب</label>
+                    <textarea id="description" name="description" rows="5" placeholder="اكتب تفاصيل الشكوى أو المقترح هنا..." required></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="attachment">مرفق (اختياري - PDF أو صورة)</label>
+                    <input type="file" id="attachment" name="attachment">
+                </div>
+
+                <button type="submit" class="btn-primary">إرسال واعتماد الطلب</button>
+            </form>
+            <div id="submitResult" class="result-box"></div>
+        </section>
+
+        <!-- Track Section -->
+        <section id="track-section" class="content-section">
+            <h2>تتبع حالة الطلب الفوري</h2>
+            <div class="track-box">
+                <input type="text" id="trackRefInput" placeholder="أدخل رقم المرجع (مثال: DEMO-8550)">
+                <button id="trackBtn" class="btn-secondary">بحث واستعلام</button>
+            </div>
+            <div id="trackResult" class="result-box"></div>
+        </section>
+    </main>
+
+    <script src="script.js"></script>
+</body>
+</html>
