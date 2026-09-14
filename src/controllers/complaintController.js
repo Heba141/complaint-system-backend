@@ -21,9 +21,13 @@ exports.createComplaint = async (req, res) => {
       return res.status(401).json({ message: 'User unauthenticated or missing ID in token' });
     }
 
-    // Check if the user exists; if not, find ANY valid user or create a fallback user 
-    // to prevent the token mismatch from blocking you during testing!
-    let existingUser = await prisma.user.findUnique({ where: { id: userId } });
+    // Safely parse userId to an integer (fixes Prisma schema type mismatch if IDs are Int)
+    const parsedUserId = parseInt(userId, 10);
+    let existingUser = null;
+
+    if (!isNaN(parsedUserId)) {
+      existingUser = await prisma.user.findUnique({ where: { id: parsedUserId } });
+    }
     
     if (!existingUser) {
       // Fallback: grab the first available user in the database so testing never fails
@@ -74,6 +78,7 @@ exports.createComplaint = async (req, res) => {
     }
   }
 };
+
 // ==========================================
 // 2. TRACK COMPLAINT BY REFERENCE CODE (Public)
 // ==========================================
